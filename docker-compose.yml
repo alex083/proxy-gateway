@@ -5,13 +5,19 @@ services:
     container_name: proxy-gateway
     build: .
     ports:
-      - "5000-5099:5000-5099"
+      - "5000-5055:5000-5055"
     environment:
-      CLIENT_USER: user
-      CLIENT_PASS: pass
-      REMOTE_USER: proxyuser
-      REMOTE_PASS: proxypass
-      REMOTE_PORT: 3406
-      API_URL: https://api.runonflux.io/apps/location/ProxyServerXXX50030
+      CLIENT_USER: FW5eg15et5g
+      CLIENT_PASS: Yuk65swfAc15rd56jtn1
+      REMOTE_USER: WFKwk538ejfjkwd
+      REMOTE_PASS: df6fc62s5643ge56
+      REMOTE_PORT: 3715
+      API_URL: https://api.runonflux.io/apps/location/proxypoolusa
       START_PORT: 5000
+      END_PORT: 5055
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
