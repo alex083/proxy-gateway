@@ -7,10 +7,10 @@ services:
     ports:
       - "5000-5099:5000-5099"
     environment:
-      CLIENT_USER: user123
-      CLIENT_PASS: pass228
-      REMOTE_USER: fs2d1sf1sf
-      REMOTE_PASS: HBFW4d41scdas
+      CLIENT_USER: user
+      CLIENT_PASS: pass
+      REMOTE_USER: proxyuser
+      REMOTE_PASS: proxypass
       REMOTE_PORT: 3406
       API_URL: https://api.runonflux.io/apps/location/ProxyServerXXX50030
       START_PORT: 5000
