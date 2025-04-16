@@ -8,6 +8,7 @@ CLIENT_PASS=${CLIENT_PASS:-clientpass}
 REMOTE_USER=${REMOTE_USER:-proxyuser}
 REMOTE_PASS=${REMOTE_PASS:-proxypass}
 REMOTE_PORT=${REMOTE_PORT:-3405}
+SERVER_IP=$(curl -s ifconfig.me)
 MAX_PARALLEL=10
 PROXY_MAP_FILE="/proxy-map.txt"
 CONFIG_DIR="/configs"
@@ -94,7 +95,7 @@ generate_configs() {
     echo "allow *"
     echo "parent 1000 socks5 $IP $REMOTE_PORT $REMOTE_USER $REMOTE_PASS"
     echo "socks -p$PORT -a -i0.0.0.0"
-    echo "socks5://$CLIENT_USER:$CLIENT_PASS@<server_ip>:$PORT" >> "$TMP_DIR/proxies.txt"
+    echo "socks5://$CLIENT_USER:$CLIENT_PASS@$SERVER_IP:$PORT" >> "$TMP_DIR/proxies.txt"
   } > "$CFG"
 done
 
