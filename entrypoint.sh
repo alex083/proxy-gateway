@@ -81,24 +81,23 @@ generate_configs() {
   done
 
   echo "[*] Генерация конфигов по блокам..."
-  for ((PORT=START_PORT; PORT<=END_PORT; PORT+=5)); do
-    CFG="$TMP_DIR/3proxy_$PORT.cfg"
-    {
-      echo "nserver 8.8.8.8"
-      echo "nscache 65536"
-      echo "users $CLIENT_USER:CL:$CLIENT_PASS"
-      echo "auth strong"
-      echo "allow *"
-      for ((i=PORT; i<PORT+5 && i<=END_PORT; i++)); do
-        IP=${PORT_MAP[$i]}
-        [[ -n "$IP" ]] && {
-          echo "parent 1000 socks5 $IP $REMOTE_PORT $REMOTE_USER $REMOTE_PASS"
-          echo "socks -p$i -a -i0.0.0.0"
-          echo "socks5://$CLIENT_USER:$CLIENT_PASS@<server_ip>:$i" >> "$TMP_DIR/proxies.txt"
-        }
-      done
-    } > "$CFG"
-  done
+ for ((PORT=START_PORT; PORT<=END_PORT; PORT++)); do
+  IP=${PORT_MAP[$PORT]}
+  [[ -z "$IP" ]] && continue
+
+  CFG="$TMP_DIR/3proxy_$PORT.cfg"
+  {
+    echo "nserver 8.8.8.8"
+    echo "nscache 65536"
+    echo "users $CLIENT_USER:CL:$CLIENT_PASS"
+    echo "auth strong"
+    echo "allow *"
+    echo "parent 1000 socks5 $IP $REMOTE_PORT $REMOTE_USER $REMOTE_PASS"
+    echo "socks -p$PORT -a -i0.0.0.0"
+    echo "socks5://$CLIENT_USER:$CLIENT_PASS@<server_ip>:$PORT" >> "$TMP_DIR/proxies.txt"
+  } > "$CFG"
+done
+
 
   save_proxy_map
 }
